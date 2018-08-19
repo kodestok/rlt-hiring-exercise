@@ -42,7 +42,7 @@ AWS resources that will be created for the Coding Test:
 
 # Other
 
-* To login to EC2 instance please use 'ubuntu' username, remember to use private key while login into the instance.
+* To login to EC2 instance please use 'ubuntu' username, remember to use private key while logging.
 	* Verify if MySQL Server is running in a Docker container by running 'sudo docker ps -a' command.
 
 * checker.sh script will SSH into the EC2 and check if the server version equals to 1.0.6. Script will use EC2's public IP address that was saved earlier in the instance_public_ip.txt file. Script will also verify if Nginx process is running. If the process is not running it will start it.
