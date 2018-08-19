@@ -40,6 +40,8 @@ AWS resources that will be created for the Coding Test:
 	* Bash script will also add all Docker prerequisites (repo, packages, etc.) and install it on EC2.
 	* Docker will run MySQL Server in the container and expose port 3306 to the public.
 
+# Other
+
 * To login to EC2 instance please use 'ubuntu' username, remember to use private key while login into the instance.
 	* Verify if MySQL Server is running in a Docker container by running 'sudo docker ps -a' command.
 
