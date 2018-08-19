@@ -3,7 +3,7 @@ Solution to the infrastructure Coding Test
 
 # Infrastructure
 
-Infrastructure will be provisioned using Hashicorp's Terraform tool.
+Infrastructure will be provisioned using Hashicorp's Terraform tool in the us-west-2 region (Oregon).
 
 AWS resources that will be created for the Coding Test:
 
