@@ -1,69 +1,50 @@
-Infrastructure Coding Test
-==========================
+Solution to the infrastructure Coding Test
+==========================================
 
-# Goal
+# Infrastructure
 
-Script the creation of a web server and your choice of database server, and a script to check the server is up.
+Infrastructure will be provisioned using Hashicorp's Terraform tool.
 
-# Prerequisites
+AWS resources that will be created for the Coding Test:
 
-You will need an AWS account. Create one if you don't own one already. You can use free-tier resources for this test.
+* VPC
+* Subnets
+* Routing Table
+* Security Groups
+* ELB
+* EC2
+* SSH key
+* Internet Gateway
 
-# The Task
+# Prerequisites to use Terraform
 
-You are required to set up a new server in AWS. It must:
+* AWS account with admin priviledges, AWS_ACCESS_KEY & AWS_SECRET_KEY need to be populted in the terraform.tfvars file
+* Public and private SSH keys 
 
-* Be publicly accessible.
-* Run Nginx.
-* Run MySQL, Postgresql, MariaDB, MongoDB
-* Serve a `/version.txt` file, containing only static text representing a version number, for example:
 
-```
-1.0.6
-```
+# Instructions
 
-# Mandatory Work
+1. Populate AWS_ACCESS_KEY & AWS_SECRET_KEY into the terraform.tfvars file.
+2. Generate SSH keys, use 'mykey' as the name and place the keys in the same folder as .tf files. Do not use passphrase:
+	* $ssh-keygen -t rsa mykey
+3. Run:
+	* terraform init
+	* terraform plan
+	* terraform apply
 
-Fork this repository.
+4. Terraform will output EC2 instance public IP address and ELB DNS address to the terminal and also export EC2 public IP address to the instance_public_ip.txt file.
+	* Verify if you can access NGINX in your web browser using addresses from the Terraform output.
+	* Also verify if /version.txt file can be served, by using output addresses - http://address/version.txt
 
-* Provide instructions on how to create the server.
-* Provide a script that can be run periodically (and externally) to check if the server is up and serving the expected version number. Use your scripting language of choice.
-* Alter the README to contain the steps required to:
-  * Create the server.
-  * Run the checker script.
-* Provide us IAM credentials to login to the AWS account. If you have other resources in it make sure we can only access what is related to this test.
+	* Bootstrap Bash script will install and run NGINX on the EC2 instance.
+	* Bash script will also add all Docker prerequisites (repo, packages, etc.) and install it on EC2.
+	* Docker will run MySQL Server in the container and expose port 3306 to the public.
 
-Send us an email when you’re done with the repo zipped up. Feel free to ask questions if anything is unclear, confusing, or just plain missing.
+* To login to EC2 instance please use 'ubuntu' username, remember to use private key while login into the instance.
+	* Verify if MySQL Server is running in a Docker container by running 'sudo docker ps -a' command.
 
-# Extra Credit
+* checker.sh script will SSH into the EC2 and check if the server version equals to 1.0.6. Script will use EC2's public IP address that was saved earlier in the instance_public_ip.txt file. Script will also verify if Nginx process is running. If the process is not running it will start it.
 
-We know time is precious, we won't mark you down for not doing the extra credits, but if you want to give them a go...
+* connect_to_ec2.sh script will connect you to the EC2 instance.
 
-* Use a terraform to set up the server.
-* Use a configuration management tool (such as Puppet, Chef or Ansible) to bootstrap the server.
-* Put the server behind a load balancer.
-* Run run inside docker
-* Make the checker script SSH into the instance, check if services are running and start it if it isn't.
 
-# Questions
-
-#### What scripting languages can I use?
-
-Anyone you like. You’ll have to justify your decision. We use Bash, Python and JavaScript internally. Please pick something you're familiar with, as you'll need to be able to discuss it.
-
-#### Will I have to pay for the AWS charges?
-
-No. You are expected to use free-tier resources only and not generate any charges. Please remember to delete your resources once the review process is over so you are not charged by AWS.
-
-#### What will you be grading me on?
-
-Scripting skills, elegance, understanding of the technologies you use, security, documentation.
-
-#### Will I have a chance to explain my choices?
-
-Feel free to comment your code, or put explanations in a pull request within the repo.
-If we proceed to a phone interview, we’ll be asking questions about why you made the choices you made.
-
-#### Why doesn't the test include X?
-
-Good question. Feel free to tell us how to make the test better. Or, you know, fork it and improve it!
